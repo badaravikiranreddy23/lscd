@@ -1,0 +1,18 @@
+{
+  "mask_pre2020": 297,
+  "mask_post2020": 300,
+  "variant_pre2020": 0,
+  "variant_post2020": 300,
+  "remote_pre2020": 300,
+  "remote_post2020": 300,
+  "viral_pre2020": 0,
+  "viral_post2020": 0,
+  "bubble_pre2020": 0,
+  "bubble_post2020": 298,
+  "essential_pre2020": 300,
+  "essential_post2020": 300,
+  "lockdown_pre2020": 0,
+  "lockdown_post2020": 300,
+  "spread_pre2020": 300,
+  "spread_post2020": 300
+}

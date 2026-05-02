@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LSCD — Lexical Semantic Change Detection</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+
+  <!-- Background grain texture -->
+  <div class="grain"></div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-bracket">[</span>LSCD<span class="logo-bracket">]</span>
+      </div>
+      <div class="header-meta">
+        <span class="tag">ACL 2024 · Aida &amp; Bollegala</span>
+        <span class="tag tag-accent">Beyond Binary</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <p class="hero-eyebrow">Graded &amp; Interpretable</p>
+    <h1 class="hero-title">How did <em>your word</em><br/>change meaning?</h1>
+    <p class="hero-sub">Enter any word to detect semantic drift between Pre-2020 and Post-2020 Reddit corpora using Jensen-Shannon Divergence + Flan-T5 definitions.</p>
+  </section>
+
+  <!-- Search -->
+  <main class="main-wrap">
+    <div class="search-card">
+      <div class="search-row">
+        <div class="search-input-wrap">
+          <span class="search-icon">⟶</span>
+          <input
+            type="text"
+            id="wordInput"
+            class="search-input"
+            placeholder="mask, lockdown, variant, remote..."
+            autocomplete="off"
+            spellcheck="false"
+          />
+        </div>
+        <button class="search-btn" id="analyzeBtn" onclick="analyzeWord()">
+          Analyze
+        </button>
+      </div>
+
+      <!-- Word chips -->
+      <div class="chips-row">
+        <span class="chips-label">Pandemic words</span>
+        <div class="chips" id="pandemicChips"></div>
+        <span class="chips-label chips-label-ctrl">Control</span>
+        <div class="chips" id="controlChips"></div>
+      </div>
+    </div>
+
+    <!-- Loading state -->
+    <div class="loading-state" id="loadingState">
+      <div class="loading-bar"><div class="loading-fill" id="loadingFill"></div></div>
+      <p class="loading-text" id="loadingText">Computing sense embeddings...</p>
+    </div>
+
+    <!-- Error state -->
+    <div class="error-state" id="errorState">
+      <p id="errorMsg"></p>
+    </div>
+
+    <!-- Results -->
+    <div class="results" id="results">
+
+      <!-- Score banner -->
+      <div class="score-banner" id="scoreBanner">
+        <div class="score-left">
+          <p class="score-eyebrow">JSD Graded Score</p>
+          <div class="score-number" id="scoreNumber">0.00</div>
+        </div>
+        <div class="score-center">
+          <div class="score-track">
+            <div class="score-fill" id="scoreFill"></div>
+            <div class="score-ticks">
+              <span>0.0</span><span>0.3</span><span>0.6</span><span>1.0</span>
+            </div>
+          </div>
+          <div class="score-zones">
+            <span class="zone zone-low">Low</span>
+            <span class="zone zone-mod">Moderate</span>
+            <span class="zone zone-high">High</span>
+          </div>
+        </div>
+        <div class="score-right">
+          <div class="verdict-badge" id="verdictBadge"></div>
+          <p class="mode-tag" id="modeTag"></p>
+        </div>
+      </div>
+
+      <!-- Two columns: clusters + definitions -->
+      <div class="two-col">
+
+        <!-- Cluster distribution -->
+        <div class="panel">
+          <p class="panel-title">Sense cluster distribution</p>
+          <p class="panel-sub">K-Means clusters across Pre vs Post-2020 corpus</p>
+          <div class="cluster-list" id="clusterList"></div>
+          <div class="cluster-legend">
+            <span class="leg-item leg-pre">Pre-2020</span>
+            <span class="leg-item leg-post">Post-2020</span>
+          </div>
+        </div>
+
+        <!-- Definitions -->
+        <div class="panel">
+          <p class="panel-title">Generated definitions</p>
+          <p class="panel-sub">Flan-T5 output from prototype sentences per cluster</p>
+          <div class="def-cards" id="defCards"></div>
+        </div>
+
+      </div>
+
+      <!-- Paper connection -->
+      <div class="paper-card" id="paperCard">
+        <div class="paper-icon">✦</div>
+        <div>
+          <p class="paper-head">What this fixes in Aida &amp; Bollegala (ACL 2024)</p>
+          <p class="paper-body" id="paperBody"></p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p>NLP Course Project · <em>Beyond Binary: Graded and Interpretable LSCD on Social Media</em></p>
+    <p>Flaw 2 (binary → graded JSD) + Flaw 4 (black-box → generative definitions) · Reddit Pre/Post 2020</p>
+  </footer>
+
+  <script src="/static/js/main.js"></script>
+</body>
+</html>
